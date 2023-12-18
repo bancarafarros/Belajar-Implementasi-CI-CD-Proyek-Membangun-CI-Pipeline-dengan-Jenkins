@@ -1,0 +1,90 @@
+Started by an SCM change
+Obtained Jenkinsfile from git /home/Downloads/simple-python-pyinstaller-app
+[Pipeline] Start of Pipeline
+[Pipeline] node
+Running on Jenkins in /var/jenkins_home/workspace/submission-python
+[Pipeline] {
+[Pipeline] checkout
+Selected Git installation does not exist. Using Default
+The recommended git tool is: NONE
+No credentials specified
+Cloning the remote Git repository
+Cloning repository /home/Downloads/simple-python-pyinstaller-app
+ > git init /var/jenkins_home/workspace/submission-python # timeout=10
+Fetching upstream changes from /home/Downloads/simple-python-pyinstaller-app
+ > git --version # timeout=10
+ > git --version # 'git version 2.30.2'
+ > git fetch --tags --force --progress -- /home/Downloads/simple-python-pyinstaller-app +refs/heads/*:refs/remotes/origin/* # timeout=10
+ > git config remote.origin.url /home/Downloads/simple-python-pyinstaller-app # timeout=10
+ > git config --add remote.origin.fetch +refs/heads/*:refs/remotes/origin/* # timeout=10
+Avoid second fetch
+ > git rev-parse refs/remotes/origin/master^{commit} # timeout=10
+Checking out Revision 13d18a7dc45a5797801f2338ae8fb2e8c9a4668d (refs/remotes/origin/master)
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f 13d18a7dc45a5797801f2338ae8fb2e8c9a4668d # timeout=10
+Commit message: "start scripted"
+First time build. Skipping changelog.
+[Pipeline] isUnix
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] sh
++ docker inspect -f . python:3.12.1-alpine3.19
+.
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] withDockerContainer
+Jenkins seems to be running inside container 58ab195e7273c666cde8eb74d77ce681047e917e0600f80ccff71860cdf8a764
+but /var/jenkins_home/workspace/submission-python could not be found among []
+but /var/jenkins_home/workspace/submission-python@tmp could not be found among []
+$ docker run -t -d -u 1000:1000 -w /var/jenkins_home/workspace/submission-python -v /var/jenkins_home/workspace/submission-python:/var/jenkins_home/workspace/submission-python:rw,z -v /var/jenkins_home/workspace/submission-python@tmp:/var/jenkins_home/workspace/submission-python@tmp:rw,z -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** python:3.12.1-alpine3.19 cat
+$ docker top 986bdb71ace7b23151834ee897b2f3a341c8418b96053e8062196f56a3afaef1 -eo pid,comm
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Build)
+[Pipeline] sh
++ python -m py_compile sources/add2vals.py sources/calc.py
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] }
+$ docker stop --time=1 986bdb71ace7b23151834ee897b2f3a341c8418b96053e8062196f56a3afaef1
+$ docker rm -f 986bdb71ace7b23151834ee897b2f3a341c8418b96053e8062196f56a3afaef1
+[Pipeline] // withDockerContainer
+[Pipeline] isUnix
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] sh
++ docker inspect -f . qnib/pytest
+.
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] withDockerContainer
+Jenkins seems to be running inside container 58ab195e7273c666cde8eb74d77ce681047e917e0600f80ccff71860cdf8a764
+but /var/jenkins_home/workspace/submission-python could not be found among []
+but /var/jenkins_home/workspace/submission-python@tmp could not be found among []
+$ docker run -t -d -u 1000:1000 -w /var/jenkins_home/workspace/submission-python -v /var/jenkins_home/workspace/submission-python:/var/jenkins_home/workspace/submission-python:rw,z -v /var/jenkins_home/workspace/submission-python@tmp:/var/jenkins_home/workspace/submission-python@tmp:rw,z -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** -e ******** qnib/pytest cat
+$ docker top ef4c083b7defbe5e6f36a8470c2ed658c8fe9252f2454f3e06bca1d269faca2d -eo pid,comm
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Test)
+[Pipeline] sh
++ py.test --junit-xml test-reports/results.xml sources/test_calc.py
+============================= test session starts ==============================
+platform linux2 -- Python 2.7.14, pytest-3.5.0, py-1.5.3, pluggy-0.6.0
+rootdir: /var/jenkins_home/workspace/submission-python, inifile:
+plugins: cov-2.5.1
+collected 5 items
+
+sources/test_calc.py .....                                               [100%]
+
+ generated xml file: /var/jenkins_home/workspace/submission-python/test-reports/results.xml 
+=========================== 5 passed in 0.02 seconds ===========================
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] }
+$ docker stop --time=1 ef4c083b7defbe5e6f36a8470c2ed658c8fe9252f2454f3e06bca1d269faca2d
+$ docker rm -f ef4c083b7defbe5e6f36a8470c2ed658c8fe9252f2454f3e06bca1d269faca2d
+[Pipeline] // withDockerContainer
+[Pipeline] }
+[Pipeline] // node
+[Pipeline] End of Pipeline
+Finished: SUCCESS
